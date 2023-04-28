@@ -1,16 +1,8 @@
 import pulp
+import init_data
+job_num = 13
+p, w, r, J = init_data.init_data(job_num)
 
-# 定式化1
-J = [1, 2, 3]
-p, w, r = dict(), dict(), dict()
-ps = [2, 2, 3]
-ws = [3, 2, 1]
-rs = [1, 0, 0]
-for j, p_value, w_value, r_value in zip(J, ps, ws, rs):
-    p[j] = p_value
-    w[j] = w_value
-    r[j] = r_value
-    
 JK=[(j,k) for j in J for k in J]
 M=1000
 prob=pulp.LpProblem(name="prob", sense=pulp.LpMinimize)
@@ -29,7 +21,6 @@ for j in range(1,len(J)+1):
         prob+=C[j]<=s[k]+M*(1-x[j,k])
         if j!=k:
             prob+=x[j,k]+x[k,j]==1
-print(prob)
 
 prob.solve()
 print(pulp.LpStatus[prob.status])

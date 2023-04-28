@@ -1,18 +1,8 @@
 import pulp
-
-# 定式化3
-J = [1, 2, 3]
-p, w, r = dict(), dict(), dict()
-ps = [2, 2, 3]
-ws = [3, 2, 1]
-rs = [1, 0, 0]
-for j, p_value, w_value, r_value in zip(J, ps, ws, rs):
-    p[j] = p_value
-    w[j] = w_value
-    r[j] = r_value
+import init_data
+job_num = 20
+p, w, r, J, Ts, T = init_data.init_data(job_num)
     
-Ts = max(rs) + sum(ps)
-T = [t for t in range(Ts+1)]
 JT = [(j,t) for j in J for t in T]
 prob=pulp.LpProblem(name="prob", sense=pulp.LpMinimize)
 z = pulp.LpVariable.dicts('z', JT,  cat='Binary')
